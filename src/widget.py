@@ -8,7 +8,12 @@ def mask_account_card(card_number: str) -> str:
         type_card = f"{card_number[0:len(card_number)-16]}"
     return f"{type_card}  {number}"
 
+
 def get_data(date_time: str) -> str:
     """Возвращает дату ДД.ММ.ГГ"""
     return f"{date_time[8:10]}.{date_time[5:7]}.{date_time[0:4]}"
+
+
+print(mask_account_card("Maestro 1596837868705199"))
+print(get_data("2018-07-11T02:26:18.671407"))
 
