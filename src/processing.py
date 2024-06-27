@@ -18,6 +18,7 @@ def sort_by_date(sorsed_of_date: list, revers: bool = True) -> list:
     new_list = sorted(sorsed_of_date, key = lambda d: d.get("date"), reverse = revers)
     return new_list
 
+
 print(filter_by_state([{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
                        {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
                        {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
