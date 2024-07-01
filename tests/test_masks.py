@@ -18,7 +18,7 @@ def test_mask_card_number(card_number):
 
 
 def test_mask_card_number_insufficient_quantity():
-    assert get_mask_card_number() is None
+    assert get_mask_card_number("12345678") is None
 
 
 def test_get_mask_account(account_number):
