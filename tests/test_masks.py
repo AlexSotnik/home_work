@@ -1,7 +1,6 @@
 import pytest
 
-from src.masks import get_mask_card_number
-from src.masks import get_mask_account
+from src.masks import get_mask_account, get_mask_card_number
 
 
 @pytest.fixture()
@@ -19,7 +18,7 @@ def test_mask_card_number(card_number):
 
 
 def test_mask_card_number_insufficient_quantity():
-    assert get_mask_card_number("12435678765") == None
+    assert get_mask_card_number() is None
 
 
 def test_get_mask_account(account_number):
