@@ -1,5 +1,4 @@
 import os
-
 from typing import Any
 
 
@@ -25,6 +24,3 @@ def count_file_and_dir(directory: Any) -> Any:
 
 
 print(count_file_and_dir("D:/Progekt/home_work"))
-
-def test():
-    pass
