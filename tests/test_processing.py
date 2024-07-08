@@ -3,11 +3,6 @@ import pytest
 from src.processing import filter_by_state, sort_by_date, start_list
 
 
-@pytest.fixture
-def test_start_list():
-    return [start_list, "EXECUTED"]
-
-
 def test_filter_by_state(test_start_list):
     assert filter_by_state(start_list, state=test_start_list)
 

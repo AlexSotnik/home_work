@@ -2,9 +2,7 @@ import pytest
 from src.generators import filter_by_currency, transaction_descriptions, card_number_generator, transactions
 
 
-@pytest.fixture
-def test_transactions():
-    return transactions
+
 def test_filter_by_currency(test_transactions, currency = "USD"):
     generator = filter_by_currency(transactions, currency)
     assert next(generator) == {
