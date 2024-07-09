@@ -11,7 +11,9 @@ def log(filename: Any) -> Callable:
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             try:
                 result = func(*args, **kwargs)
-                log_message = f"{func.__name__} вызывается с помощью аргументов: {args}, kwargs:{kwargs}. Результат: {result}"
+                log_message = (
+                    f"{func.__name__} вызывается с помощью аргументов: {args}, kwargs:{kwargs}. Результат: {result}"
+                )
             except Exception as e:
                 log_message = f"{func.__name__} ошибка {e}. Входящие:{args}, {kwargs}"
             if filename:
@@ -31,4 +33,4 @@ def my_function(x: int, y: int) -> int:
     return x + y
 
 
-my_function(1,2)
+my_function(1, 2)
