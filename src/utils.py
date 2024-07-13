@@ -1,7 +1,8 @@
 import json
 import os
-import requests
 from typing import Any
+
+import requests
 from dotenv import load_dotenv
 from requests import RequestException
 
@@ -11,7 +12,7 @@ api_key = os.getenv("API_KEY")
 
 def open_json_file(my_file: str) -> Any:
     try:
-        with open(my_file, 'r', encoding='utf-8') as f:
+        with open(my_file, "r", encoding="utf-8") as f:
             try:
                 file_operation = json.load(f)
                 if file_operation == []:
@@ -61,7 +62,7 @@ def transaction_amount_in_rub(transactions: list, transaction_id: int) -> Any:
                 if rub_amount != 0:
                     return rub_amount
                 else:
-                   return "Конвертация не может быть выполнена"
+                    return "Конвертация не может быть выполнена"
     else:
         return "Транзакция не найдена"
 
