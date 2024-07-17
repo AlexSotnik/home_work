@@ -1,33 +1,46 @@
 import json
 import os
-from typing import Any
-
 import requests
+import logging
+from typing import Any
 from dotenv import load_dotenv
 from requests import RequestException
 
 load_dotenv()
 api_key = os.getenv("API_KEY")
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s: %(filename)s: %(levelname)s: %(message)s",
+    filename="../logs/utils.log",
+    filemode="w",
+                    )
+logger = logging.getLogger('utils')
+
 
 def open_json_file(my_file: str) -> Any:
+    """Принимает на вход путь до JSON-файла и возвращает список словарей с данными о финансовых транзакциях"""
     try:
+        logger.info("Принимаю json-файл со сиписком транзакций")
         with open(my_file, "r", encoding="utf-8") as f:
             try:
+                logger.info("Файл получен")
                 file_operation = json.load(f)
                 if file_operation == []:
                     return []
             except json.JSONDecodeError:
+                logger.error("Decode error")
                 return []
     except FileNotFoundError:
+        logger.error("File was not found")
         return []
     return file_operation
 
 
 def convert_to_rub(transaction_convert: dict) -> Any:
+    """Принимает значение в долларах или евро, обращается к внешнему API и возвращает конвертацию в рубли"""
     amount = transaction_convert["amount"]
     currency = transaction_convert["currency"]
-    """Принимает значение в долларах или евро, обращается к внешнему API и возвращает конвертацию в рубли"""
     try:
         if currency == "USD":
             url = f"https://api.apilayer.com/exchangerates_data/convert?to=RUB&from=USD&amount={amount}"
@@ -49,10 +62,12 @@ def convert_to_rub(transaction_convert: dict) -> Any:
 
 def transaction_amount_in_rub(transactions: list, transaction_id: int) -> Any:
     """Принимает транзакцию и возвращает сумму в рублях, если операция не в рублях, конвертирует"""
+    logger.info("Получаю сумму транзакции")
     for transaction in transactions:
         if transaction.get("id") == transaction_id:
             if transaction["operationAmount"]["currency"]["code"] == "RUB":
                 rub_amount = transaction["operationAmount"]["amount"]
+                logger.info(f"Сумма транзакции: {rub_amount}")
                 return rub_amount
             else:
                 transaction_convert = dict()
@@ -60,10 +75,13 @@ def transaction_amount_in_rub(transactions: list, transaction_id: int) -> Any:
                 transaction_convert["currency"] = transaction["operationAmount"]["currency"]["code"]
                 rub_amount = round(convert_to_rub(transaction_convert), 2)
                 if rub_amount != 0:
+                    logger.info(f"Сумма транзакции: {rub_amount}")
                     return rub_amount
                 else:
+                    logger.error("Конвертация не может быть выполнена")
                     return "Конвертация не может быть выполнена"
     else:
+        logger.info("Транзакция не найдена")
         return "Транзакция не найдена"
 
 
