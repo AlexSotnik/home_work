@@ -5,8 +5,8 @@ logging.basicConfig(
     format="%(asctime)s: %(filename)s: %(levelname)s: %(message)s",
     filename="../logs/masks.log",
     filemode="w",
-                    )
-logger = logging.getLogger('masks')
+)
+logger = logging.getLogger("masks")
 
 
 def get_mask_card_number(card_number: str) -> str | None:

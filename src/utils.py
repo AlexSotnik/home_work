@@ -1,8 +1,9 @@
 import json
-import os
-import requests
 import logging
+import os
 from typing import Any
+
+import requests
 from dotenv import load_dotenv
 from requests import RequestException
 
@@ -14,8 +15,8 @@ logging.basicConfig(
     format="%(asctime)s: %(filename)s: %(levelname)s: %(message)s",
     filename="../logs/utils.log",
     filemode="w",
-                    )
-logger = logging.getLogger('utils')
+)
+logger = logging.getLogger("utils")
 
 
 def open_json_file(my_file: str) -> Any:

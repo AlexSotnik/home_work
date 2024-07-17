@@ -49,7 +49,7 @@ transactions = [
 ]
 
 
-def filter_by_currency(transactions: list[Dict[str, Any]], currency: str):
+def filter_by_currency(transactions: list[Dict[str, Any]], currency: str) -> Any:
     """Возвращает итератор, который поочередно выдает транзакции,
     где валюта операции соответствует заданной"""
     for key in transactions:
@@ -63,10 +63,10 @@ def transaction_descriptions(transactions: list[Dict]) -> Generator[dict, None, 
         yield key["description"]
 
 
-def card_number_generator(start: int, end: int):
+def card_number_generator(start: int, end: int) -> str:
     """Генерирует номера карт в формате XXXX XXXX XXXX XXXX."""
     for number in range(start, end + 1):
-        yield " ".join("{:016}".format(number)[i : i + 4] for i in range(0, 16, 4))
+        yield " ".join("{:016}".format(number)[i: i + 4] for i in range(0, 16, 4))
 
 
 usd_transactions = filter_by_currency(transactions, "USD")
