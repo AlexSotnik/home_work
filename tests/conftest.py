@@ -1,7 +1,6 @@
 import pytest
 from src.processing import filter_by_state, sort_by_date, start_list
 from src.generators import transactions
-from src.utils import open_json_file
 
 
 @pytest.fixture
