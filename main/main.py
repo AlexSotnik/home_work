@@ -70,6 +70,7 @@ print('''Отсортировать операции по дате? yes/no''')
 user_input_3 = input().lower()
 
 print('''Отсортировать по возрастанию или по убыванию? ascending/descending''')
+
 user_input_4 = input()
 # while True:
 #     if user_input_3 != "yes" and user_input_3 != "no":

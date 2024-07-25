@@ -21,5 +21,5 @@ def sort_by_date(sorsed_of_date: list, revers: bool = True) -> list:
     return new_list
 
 
-# print(filter_by_state(start_list))
-# print(sort_by_date(start_list))
+print(filter_by_state(start_list))
+print(sort_by_date(start_list))
