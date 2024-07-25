@@ -6,20 +6,13 @@ start_list = [
 ]
 
 
-def filter_by_state(orig_list: list, state: str = "EXECUTED") -> list:
+def filter_by_state(orig_list: list, state: str) -> list:
     """Возвращает тот или иной словаль в зависимости от статуса 'state'"""
     new_list_executed = []
-    new_list_not_executed = []
     for i in orig_list:
-        if i["state"] == "EXECUTED":
+        if i.get("state") == state:
             new_list_executed.append(i)
-        else:
-            new_list_not_executed.append(i)
-
-    if state == "EXECUTED":
-        return new_list_executed
-    elif state != "EXECUTED":
-        return new_list_not_executed
+    return new_list_executed
 
 
 def sort_by_date(sorsed_of_date: list, revers: bool = True) -> list:
@@ -28,5 +21,5 @@ def sort_by_date(sorsed_of_date: list, revers: bool = True) -> list:
     return new_list
 
 
-print(filter_by_state(start_list))
-print(sort_by_date(start_list))
+# print(filter_by_state(start_list))
+# print(sort_by_date(start_list))
