@@ -1,114 +1,150 @@
-from typing import Any
+from typing import Any, Dict, List
+
+from src.utils import open_json_file
 from src.open_csv_file import get_csv_data_dict
 from src.open_excel_file import get_xlsx_data_dict
-from src.utils import open_json_file
 from src.processing import filter_by_state, sort_by_date
+from src.output_file import get_right_format
+from src.search_str import search_by_string
 
-print('''Привет! Добро пожаловать в программу работы 
-с банковскими транзакциями. 
-Выберите необходимый пункт меню:
-1. Получить информацию о транзакциях из JSON-файла
-2. Получить информацию о транзакциях из CSV-файла
-3. Получить информацию о транзакциях из XLSX-файла''')
+print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.")
+print("Выберите необходимый пункт меню:"
+        "\n1. Получить информацию о транзакциях из JSON-файла"
+        "\n2. Получить информацию о транзакциях из CSV-файла"
+        "\n3. Получить информацию о транзакциях из XLSX-файла")
 
 user_input = input()
 
-
 while True:
-    if user_input == '1':
-        print('Для обработки выбран JSON-файл')
+    if user_input == "1":
+        print("Для обработки выбран JSON-файл")
         break
-    elif user_input == '2':
-        print('Для обработки выбран csv-файл')
+    elif user_input == "2":
+        print("Для обработки выбран CSV-файл")
         break
-    elif user_input == '3':
-        print('Для обработки выбран excel-файл')
+    elif user_input == "3":
+        print("Для обработки выбран XLSX-файл")
         break
     else:
-        print( "Вы не выбрали файл. Выберите необходимый файл: "
-        "\n1. Получить информацию о транзакциях из JSON-файла "
-        "\n2. Получить информацию о транзакциях из CSV-файла "
-        "\n3. Получить информацию о транзакциях из XLSX-файла")
+        print(
+            "Вы не выбрали файл. Выберите необходимый файл: "
+            "\n1. Получить информацию о транзакциях из JSON-файла "
+            "\n2. Получить информацию о транзакциях из CSV-файла "
+            "\n3. Получить информацию о транзакциях из XLSX-файла"
+        )
         user_input = input()
 
-def user_input_choice(user_input: str) -> Any:
+
+def get_transactions(user_input: str) -> Any:
+    """Выбирает нужный путь к файлу в выбранном формате"""
     if user_input == "1":
-        choice = open_json_file("../data/operations.json")
+        transactions = open_json_file("../data/operations.json")
+        return transactions
     elif user_input == "2":
-        choice = get_csv_data_dict("../data/transactions.csv")
-    else:
-        choice = get_xlsx_data_dict("../data/transactions_excel.xlsx")
+        transactions = get_csv_data_dict("../data/transactions.csv")
+        return transactions
+    elif user_input == "3":
+        transactions = get_xlsx_data_dict("../data/transactions_excel.xlsx")
+        return transactions
 
-    return choice
 
-
-open_file = user_input_choice(user_input)
-
-print('''Введите статус, по которому необходимо выполнить фильтрацию. 
-Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING''')
+transactions_step_1 = get_transactions(user_input)
+# print(transactions_step_1)
+print(
+    "Введите статус, по которому необходимо выполнить фильтрацию. "
+    "\nДоступные для фильтровки статусы: EXECUTED, CANCELED, PENDING"
+)
 user_input_2 = input()
 
 while True:
-    if user_input_2.upper() == 'EXECUTED':
-        print('Операции отфильтрованы по статусу "EXECUTED"')
+    if user_input_2.lower() == "executed":
+        print("Операции отфильтрованы по статусу EXECUTED")
         break
-    elif user_input_2.upper() == 'CANCELED':
-        print('Операции отфильтрованы по статусу "CANCELED"')
+    elif user_input_2.lower() == "canceled":
+        print("Операции отфильтрованы по статусу CANCELED")
         break
-    elif user_input_2.upper() == 'PENDING':
-        print('Операции отфильтрованы по статусу "PENDING"')
+    elif user_input_2.lower() == "pending":
+        print("Операции отфильтрованы по статусу PENDING")
         break
     else:
-        print(f'Статус операции {user_input_2} недоступен.')
-        print('''Введите статус, по которому необходимо выполнить фильтрацию. 
-Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING''')
+        print(f"Статус операции {user_input_2} недоступен")
+        print(
+            "Введите статус, по которому необходимо выполнить фильтрацию. "
+            "\nДоступные для фильтровки статусы: EXECUTED, CANCELED, PENDING"
+        )
         user_input_2 = input()
 
-filter_out = filter_by_state(open_file, user_input_2)
+transactions_step_2 = filter_by_state(transactions_step_1, user_input_2.upper())
+print(transactions_step_2)
 
-print('''Отсортировать операции по дате? yes/no''')
-user_input_3 = input().lower()
+print("Отсортировать операции по дате? Да/Нет")
+user_input_3 = input()
 
-print('''Отсортировать по возрастанию или по убыванию? ascending/descending''')
-
-user_input_4 = input()
-# while True:
-#     if user_input_3 != "yes" and user_input_3 != "no":
-#         print('''Отсортировать операции по дате? yes/no''')
-#         user_input_3 = input()
-#     else:
-#         print('''Отсортировать по возрастанию или по убыванию? ascending/descending''')
-#         user_input_4 = input()
-#         while True:
-#             if user_input_4.lower() != "ascending" and user_input_4.lower() != "descending":
-#                 print('''Отсортировать по возрастанию или по убыванию? ascending/descending''')
-#                 user_input_4 = input()
-#             else:
-#                 break
-#         break
-
-def sort_of_date(user_input_4):
-    if user_input_4.lower() == "ascending":
-        filter_date = sort_by_date(filter_out)
-    elif user_input_4.lower() == "descending":
-        filter_date = sort_by_date(filter_out, False)
-
-    return filter_date
+if user_input_3.lower() == "да":
+    print("Отсортировать по возрастанию или по убыванию?")
+    user_input_4 = input()
+    if user_input_4.lower() != "по возрастанию" and user_input_4.lower() != "по убыванию":
+        print("Введите: по возрастанию / по убыванию")
+        user_input_4 = input()
+elif user_input_3.lower() != "да":
+    user_input_4 = ""
 
 
-filter_out_1 = sort_of_date(user_input_4)
-print(filter_out_1)
-"""
-print('''Выводить только рублевые тразакции? yes/no''')
+def get_transactions_list_by_date(transactions: List[Dict], user_input: str, user_input_sort: str) -> Any:
+    if user_input.lower() == "да":
+        if user_input_sort.lower() == "по возрастанию":
+            new_transactions = sort_by_date(transactions, True)
+            return new_transactions
+        elif user_input_sort.lower() == "по убыванию":
+            new_transactions = sort_by_date(transactions, False)
+            return new_transactions
+    elif user_input.lower() != "да":
+        return transactions
+
+
+transactions_step_3 = get_transactions_list_by_date(transactions_step_2, user_input_3, user_input_4)
+# print(transactions_step_3)
+
+print("Выводить только рублевые транзакции? Да/Нет")
 user_input_5 = input()
 
-while True:
-    if user_input_5.lower() != "yes" and user_input_5.lower() != "no":
-        print('''Выводить только рублевые тразакции? yes/no''')
-        user_input_5 = input()
-    elif user_input_5 == "yes":
-        filter_RUB =
-    else:
-        break
 
-"""
+def get_transactions_list_rub(transactions: List[Dict], user_input: str) -> Any:
+    new_transactions = []
+    if user_input.lower() == "да":
+        for transaction in transactions:
+            if transaction["operationAmount"]["currency"]["code"] == "RUB":
+                new_transactions.append(transaction)
+                return new_transactions
+    else:
+        return transactions
+
+
+transactions_step_4 = get_transactions_list_rub(transactions_step_3, user_input_5)
+
+print("Отфильтровать список транзакций по определенному слову в описании? Да/Нет")
+user_input_6 = input()
+
+if user_input_6.lower() == "да":
+    print("Введите слово:")
+    user_input_7 = input()
+elif user_input_6.lower() != "да":
+    user_input_7 = ""
+
+
+def get_transactions_list_by_word(transactions: List[Dict], user_input: str, word: str) -> Any:
+    """По необходимости возвращает только операции, в описании которых есть введенное слово"""
+    if user_input.lower() == "да":
+        new_transactions = search_by_string(transactions, word)
+        return new_transactions
+    elif user_input.lower() != "да":
+        return transactions
+
+
+transactions_step_5 = get_transactions_list_by_word(transactions_step_4, user_input_6, user_input_7)
+# print(transactions_step_5)
+
+print("Распечатываю итоговый список транзакций...")
+
+result = get_right_format(transactions_step_5)
+print(result)

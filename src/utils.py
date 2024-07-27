@@ -86,6 +86,6 @@ def transaction_amount_in_rub(transactions: list, transaction_id: int) -> Any:
         return "Транзакция не найдена"
 
 
-if __name__ == "__main__":
-    transactions = open_json_file("../data/operations.json")
-    print(transaction_amount_in_rub(transactions, 179194306))
+# if __name__ == "__main__":
+#     transactions = open_json_file("../data/operations.json")
+#     print(transaction_amount_in_rub(transactions, 179194306))

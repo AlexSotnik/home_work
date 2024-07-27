@@ -9,10 +9,10 @@ def mask_account_card(card_number: str) -> str:
     return f"{type_card}{number}"
 
 
-def get_data(date_time: str) -> str:
+def get_date(date_time: str) -> str:
     """Возвращает дату ДД.ММ.ГГ"""
     return f"{date_time[8:10]}.{date_time[5:7]}.{date_time[0:4]}"
 
 
-print(mask_account_card("Счет 12345678901234567890"))
-print(get_data("2018-07-11T02:26:18.671407"))
+# print(mask_account_card("Счет 12345678901234567890"))
+# print(get_data("2018-07-11T02:26:18.671407"))
