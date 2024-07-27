@@ -8,10 +8,10 @@ from src.output_file import get_right_format
 from src.search_str import search_by_string
 
 print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.")
-print("Выберите необходимый пункт меню:"
-        "\n1. Получить информацию о транзакциях из JSON-файла"
-        "\n2. Получить информацию о транзакциях из CSV-файла"
-        "\n3. Получить информацию о транзакциях из XLSX-файла")
+print('''Выберите необходимый пункт меню:
+1. Получить информацию о транзакциях из JSON-файла
+2. Получить информацию о транзакциях из CSV-файла
+3. Получить информацию о транзакциях из XLSX-файла''')
 
 user_input = input()
 
@@ -75,7 +75,7 @@ while True:
         user_input_2 = input()
 
 transactions_step_2 = filter_by_state(transactions_step_1, user_input_2.upper())
-print(transactions_step_2)
+# print(transactions_step_2)
 
 print("Отсортировать операции по дате? Да/Нет")
 user_input_3 = input()

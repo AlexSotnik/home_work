@@ -30,6 +30,7 @@ def get_csv_data_dict(file_name: str) -> List[Dict]:
     except Exception:
         return [{}]
 
+
 #
 # if __name__ == "__main__":
 #     result = get_csv_data_dict("../data/transactions.csv")

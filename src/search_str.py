@@ -1,6 +1,5 @@
 import re
 from typing import Dict, List
-from src.open_csv_file import get_csv_data_dict
 
 
 def search_by_string(dictionaries: List[Dict], user_string: str) -> List[Dict]:
